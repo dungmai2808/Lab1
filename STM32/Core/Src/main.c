@@ -86,24 +86,25 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-  //ex6
   uint16_t numbers[12] = {
-            GPIO_PIN_4,  // 0
-            GPIO_PIN_5,  // 1
-            GPIO_PIN_6,  // 2
-            GPIO_PIN_7,  // 3
-            GPIO_PIN_8,  // 4
-            GPIO_PIN_9,  // 5
-            GPIO_PIN_10, // 6
-            GPIO_PIN_11, // 7
-            GPIO_PIN_12, // 8
-            GPIO_PIN_13, // 9
-            GPIO_PIN_14, // 10
-            GPIO_PIN_15, // 11
-        };
+          GPIO_PIN_4,  // 0
+          GPIO_PIN_5,  // 1
+          GPIO_PIN_6,  // 2
+          GPIO_PIN_7,  // 3
+          GPIO_PIN_8,  // 4
+          GPIO_PIN_9,  // 5
+          GPIO_PIN_10, // 6
+          GPIO_PIN_11, // 7
+          GPIO_PIN_12, // 8
+          GPIO_PIN_13, // 9
+          GPIO_PIN_14, // 10
+          GPIO_PIN_15, // 11
+      };
 
-    // Xóa màn hình
-    GPIOA->ODR = 0xFFFF;
+  // Xóa màn hình
+  GPIOA->ODR = 0xFFFF;
+
+  int hour = 0; int minute = 0; int second = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -111,11 +112,31 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  for (int i = 0; i <= 11; i++) {
-		  HAL_GPIO_WritePin(GPIOA, numbers[i], GPIO_PIN_RESET);
-		  HAL_Delay(1000);
+	  for(int i = 0; i < 12*60*60; i++) {
+	  		  hour = i/3600;
+	  		  minute = (i/300)%12;
+	  		  second = (i/5)%12;
+	  		  if(i % 3600 == 0) {
+	  			  HAL_GPIO_WritePin(GPIOA, numbers[hour], GPIO_PIN_RESET);
+	  			  if((hour+11)%12 != minute && (hour+11)%12 != second) {
+	  				  HAL_GPIO_WritePin(GPIOA, numbers[(hour+11)%12], GPIO_PIN_SET);
+	  			  }
+	  		  }
+	  		  if(i % 300 == 0) {
+	  			  HAL_GPIO_WritePin(GPIOA, numbers[minute], GPIO_PIN_RESET);
+	  			  if((minute+11)%12 != hour && (minute+11)%12 != second) {
+	  				  HAL_GPIO_WritePin(GPIOA, numbers[(minute+11)%12], GPIO_PIN_SET);
+	  			  }
+	  		  }
+	  		  if(i % 5 == 0) {
+	  			  HAL_GPIO_WritePin(GPIOA, numbers[second], GPIO_PIN_RESET);
+	  			  if((second+11)%12 != hour && (second+11)%12 != minute) {
+	  				  HAL_GPIO_WritePin(GPIOA, numbers[(second+11)%12], GPIO_PIN_SET);
+	  			  }
+	  		  }
+	  		  HAL_Delay(200);
 	  }
-    /* USER CODE BEGIN 3 */
+	  /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
