@@ -49,7 +49,7 @@
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
-
+void clearAllClock ();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -102,8 +102,8 @@ int main(void)
             GPIO_PIN_15, // 11
         };
 
-    // Xóa màn hình
-    GPIOA->ODR = 0xFFFF;
+   // Xóa màn hình
+  clearAllClock();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -185,7 +185,9 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void clearAllClock(){
+    GPIOA->ODR = 0xFFFF;
+}
 /* USER CODE END 4 */
 
 /**
