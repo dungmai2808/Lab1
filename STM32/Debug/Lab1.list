@@ -108,6 +108,7 @@ int main(void)
   MX_GPIO_Init();
  800015a:	f000 f863 	bl	8000224 <MX_GPIO_Init>
   /* USER CODE BEGIN 2 */
+  //ex6
   uint16_t numbers[12] = {
  800015e:	4b11      	ldr	r3, [pc, #68]	; (80001a4 <main+0x58>)
  8000160:	1d3c      	adds	r4, r7, #4

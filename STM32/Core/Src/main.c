@@ -86,6 +86,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
+  //ex6
   uint16_t numbers[12] = {
             GPIO_PIN_4,  // 0
             GPIO_PIN_5,  // 1
