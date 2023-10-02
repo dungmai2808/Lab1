@@ -49,7 +49,7 @@
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
-
+void setNumberOnClock(int num);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -86,24 +86,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-  //ex6
-  uint16_t numbers[12] = {
-            GPIO_PIN_4,  // 0
-            GPIO_PIN_5,  // 1
-            GPIO_PIN_6,  // 2
-            GPIO_PIN_7,  // 3
-            GPIO_PIN_8,  // 4
-            GPIO_PIN_9,  // 5
-            GPIO_PIN_10, // 6
-            GPIO_PIN_11, // 7
-            GPIO_PIN_12, // 8
-            GPIO_PIN_13, // 9
-            GPIO_PIN_14, // 10
-            GPIO_PIN_15, // 11
-        };
 
-    // Xóa màn hình
-    GPIOA->ODR = 0xFFFF;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -112,7 +95,8 @@ int main(void)
   {
     /* USER CODE END WHILE */
 	  for (int i = 0; i <= 11; i++) {
-		  HAL_GPIO_WritePin(GPIOA, numbers[i], GPIO_PIN_RESET);
+		  setNumberOnClock(i);
+		  HAL_Delay(1000);
 	  }
     /* USER CODE BEGIN 3 */
   }
@@ -185,7 +169,30 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void setNumberOnClock(int num) {
+    // Array represents 12 numbers on clock
+    uint16_t numbers[12] = {
+        GPIO_PIN_4,  // 0
+        GPIO_PIN_5,  // 1
+        GPIO_PIN_6,  // 2
+        GPIO_PIN_7,  // 3
+        GPIO_PIN_8,  // 4
+        GPIO_PIN_9,  // 5
+        GPIO_PIN_10, // 6
+        GPIO_PIN_11, // 7
+        GPIO_PIN_12, // 8
+        GPIO_PIN_13, // 9
+        GPIO_PIN_14, // 10
+        GPIO_PIN_15, // 11
+    };
 
+    // Clear all clocks
+    GPIOA->ODR = 0xFFFF;
+
+    if (num >= 0 && num <= 11) {
+    	HAL_GPIO_WritePin(GPIOA, numbers[num], GPIO_PIN_RESET);
+    }
+}
 /* USER CODE END 4 */
 
 /**
