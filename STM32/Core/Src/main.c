@@ -113,6 +113,7 @@ int main(void)
     /* USER CODE END WHILE */
 	  for (int i = 0; i <= 11; i++) {
 		  HAL_GPIO_WritePin(GPIOA, numbers[i], GPIO_PIN_RESET);
+		  HAL_Delay(1000);
 	  }
     /* USER CODE BEGIN 3 */
   }
